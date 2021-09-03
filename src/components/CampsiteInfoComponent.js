@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 
-//class CampsiteInfo extends Component {
  
  function RenderCampsite({campsite}) {
     return(
