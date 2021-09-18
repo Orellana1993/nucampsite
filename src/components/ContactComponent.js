@@ -132,7 +132,8 @@ class Contact extends Component {
                                     <Control.textarea model='.feedback' id="feedback" name="feedback"
                                         rows="12"
                                         className='form-control'
-                                        
+                                        value={this.state.feedback}
+                                        onChange={this.handleInputChange}
                                 />
                                 </Col>
                             </Row>

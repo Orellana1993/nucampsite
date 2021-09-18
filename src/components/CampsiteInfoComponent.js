@@ -1,9 +1,95 @@
 
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Modal, Button, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Component } from 'react'
+import { Control, LocalForm, Errors } from 'react-redux-form';
+import ModalHeader from 'reactstrap/lib/ModalHeader';
+import ModalBody from 'reactstrap/lib/ModalBody';
 
+const valid = val => val
+const maxLen = len => val => !val || (val.length) < len 
+const minLen = len => val => val && (val.length) > len 
 
+class CommentForm extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+        modalOpen: false,
+        toggleOpen: false
+        }
+        this.handleModal = this.handleModal.bind(this);
+       
+        
+    }
+
+    handleModal() {
+         this.setState({modalOpen: !this.state.modalOpen})
+    }
+    handleSubmit(values) {
+        console.log('current state is: ' + JSON.stringify(values));
+        alert('Current state is: ' + JSON.stringify(values))
+    }
+    
+    render(){
+    return(  
+        <React.Fragment>
+            <Button onClick={this.handleModal} className='btn-lg' outline><i className='fa fa-pencil'></i>Submit Comment</Button>
+
+            <Modal isOpen={this.state.modalOpen} toggle={this.handleModal} >
+                <ModalHeader toggle={this.handleModal}>Submit Comment</ModalHeader>
+                <ModalBody>
+                    <LocalForm onSubmit={values =>this.handleSubmit(values)}>
+                        <div className='form-group'>
+                            <Label hmtlFor='rating'>Rating</Label>
+                            <div className='form-group'>
+                                <Control.select model='.rating' id='rating' name='rating' className='form-control'>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Control.select>
+                            </div>
+                        </div>
+                        <div className='form-group'>
+                            <Label hmtlFor='author'>Your Name</Label>
+                                <Control.text  model='.author' id='author' name='auhtor' placeholder='Your Name' className='form-control'
+                                 validators={{
+                                    valid,
+                                    maxLen: maxLen(15),
+                                    minLen: minLen(2)
+                                 }}
+                                />
+                                <Errors
+                                    className='text-danger'
+                                    model='.author'
+                                    show='touched'
+                                    component='div'
+                                    messages={{
+                                        valid: 'Required',
+                                        minLen: 'Must be at least 2 characters',
+                                        maxLen: 'Must be 15 characters or less' 
+                                    }}
+                                />
+                            
+                        </div>
+                        <div className='form-group'>
+                            <Label hmtlFor='text'>Comment</Label>    
+                                <Control.textarea model='.text' id='text' name='text' className='form-control'/>
+                        </div>
+                        <div className='form-group'>
+                            <Button type="submit" color="primary">
+                                Submit
+                            </Button>
+                        </div>
+                    </LocalForm>
+                </ModalBody>    
+            </Modal>
+         </React.Fragment>    
+        )
+    }
+}
  
  function RenderCampsite({campsite}) {
     return(
@@ -36,7 +122,7 @@ import { Link } from 'react-router-dom';
                           )  
                     })
                     }
-
+                <CommentForm />
             </div>
         )
 
