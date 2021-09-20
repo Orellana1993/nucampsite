@@ -6,6 +6,7 @@ import { Component } from 'react'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import ModalHeader from 'reactstrap/lib/ModalHeader';
 import ModalBody from 'reactstrap/lib/ModalBody';
+import { Loading } from './LoadingComponent';
 
 const valid = val => val
 const maxLen = len => val => !val || (val.length) < len 
@@ -133,6 +134,27 @@ class CommentForm extends Component {
 }
 
 function CampsiteInfo(props) {
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
      if (props.campsite){
          return (
          <div className='container'>
