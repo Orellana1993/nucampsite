@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, Form, Errors, actions } from 'react-redux-form';
-
+import { Control, Form } from 'react-redux-form'
 
 class Contact extends Component {
     constructor(props){
@@ -24,12 +23,11 @@ class Contact extends Component {
         }
 
      this.handleSubmit = this.handleSubmit.bind(this);
-
+    
     }
 
     handleSubmit(values){
-        console.log('current state is: ' + JSON.stringify(values));
-        alert('Current state is: ' + JSON.stringify(values));
+        this.props.postFeedback(values)
         this.props.resetFeedbackForm();
      }    
 
@@ -68,7 +66,7 @@ class Contact extends Component {
                         <hr />
                     </div>
                     <div className="col-md-10">
-                        <Form model='feedbackForm' onSubmit={values =>this.handleSubmit(values)}>
+                        <Form model='feedbackForm' onSubmit={values => this.handleSubmit(values)}>
                             <Row className='form-group'>
                                 <Label htmlFor=".firstName" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -132,8 +130,6 @@ class Contact extends Component {
                                     <Control.textarea model='.feedback' id="feedback" name="feedback"
                                         rows="12"
                                         className='form-control'
-                                        value={this.state.feedback}
-                                        onChange={this.handleInputChange}
                                 />
                                 </Col>
                             </Row>
